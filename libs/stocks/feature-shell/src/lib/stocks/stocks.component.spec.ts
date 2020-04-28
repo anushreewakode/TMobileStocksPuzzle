@@ -26,7 +26,7 @@ describe('StocksComponent', () => {
   });
 
   describe('fetchQuote()', function () {
-   
+
     it('should not call fetchQuote() method for empty input value', async(() => {
 
       component.stockPickerForm.controls['symbol'].setValue(' ');
@@ -35,21 +35,21 @@ describe('StocksComponent', () => {
       component.fetchQuote();
 
       expect(fetchQuoteSpy).toHaveBeenCalledTimes(0);
-      
+
     }));
-  
+
     it('should call fetchQuote() method for valid input value', async(() => {
 
       component.stockPickerForm.controls['symbol'].setValue('AAPL');
       component.stockPickerForm.controls['period'].setValue('One month');
       let fetchQuoteSpy = spyOn(priceQueryFacade, 'fetchQuote');
-  
+
       component.fetchQuote();
-  
+
       expect(fetchQuoteSpy).toHaveBeenCalledTimes(1);
-  
+
     }));
 
   });
-  
+
 });

@@ -22,6 +22,7 @@ A short code review of the base `master` branch:
 - Constants can be used for static content instead of strings
 - Make properties readonly to maintain immutability
 - Add basic styling to form fields to improve user experience
+- Unsubscribe from observables once the component is destroyed
 - Fix unit testcases
 
    #### If this was a critical application,
@@ -34,7 +35,7 @@ A short code review of the base `master` branch:
 
 3. Are there any code smells or problematic implementations?
 
-- Chart is not rendering on UI because wrong object is passed in `*ngIf="data"` for google-chart element.'data$' is of type observable , passing 'data$ | async' fixes the issue.Here async pipe subscribes to data$ observable to display the emitted values.
+- Chart is not rendering on UI because wrong object is passed in `*ngIf="data"` for google-chart element.Passing correct object i.e. 'chartData' fixes the issue.
 
 - Test cases are not working
 

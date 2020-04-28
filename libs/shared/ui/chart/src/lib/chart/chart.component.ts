@@ -31,7 +31,9 @@ export class ChartComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.chartSubscription.unsubscribe()
-} 
+    if (this.chartSubscription) {
+      this.chartSubscription.unsubscribe()
+    }
+  } 
 }
 
