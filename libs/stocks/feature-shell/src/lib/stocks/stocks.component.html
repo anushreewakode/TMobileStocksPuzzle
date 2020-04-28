@@ -1,35 +1,35 @@
-<form [formGroup]="stockPickerForm">
+<form [formGroup]="stockPickerForm" role="form" id="stockPickerForm">
   <mat-form-field>
     <input
       matInput
       placeholder="Symbol e.g AAPL"
       formControlName="symbol"
-      value=""
+      value="" id="symbol"
     />
     <mat-error
-      ><span
+      ><span 
         *ngIf="
           !stockPickerForm.get('symbol').valid &&
           stockPickerForm.get('symbol').touched
         "
-        >Please enter a symbol</span
+        id="symbolError" aria-label="Please enter a symbol">Please enter a symbol</span
       >
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
+    <mat-label  aria-label="Favorite time period" id="periodLabel">Favorite time period</mat-label>
+    <mat-select formControlName="period" id="timePeriods" role="listbox" aria-labelledby="periodLabel">
       <mat-option
         *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
+        [value]="timePeriod.value" role="option"
       >
         {{ timePeriod.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
+  <button (click)="fetchQuote()" mat-raised-button id="submitBtn" role="button" aria-label="Go button">Go</button>
 </form>
 
 <coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
