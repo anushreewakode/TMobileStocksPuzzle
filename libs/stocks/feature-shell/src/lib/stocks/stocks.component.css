@@ -1,3 +1,6 @@
 mat-form-field {
   display: block;
+  width: 48%;
+  float: left;
+  padding-right: 1%;
 }
