@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { stockConstants } from './stocks.constants';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -11,19 +14,10 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
-
+  private stockPickerFormSubscription:Subscription;
   quotes$ = this.priceQuery.priceQueries$;
 
-  timePeriods = [
-    { viewValue: 'All available data', value: 'max' },
-    { viewValue: 'Five years', value: '5y' },
-    { viewValue: 'Two years', value: '2y' },
-    { viewValue: 'One year', value: '1y' },
-    { viewValue: 'Year-to-date', value: 'ytd' },
-    { viewValue: 'Six months', value: '6m' },
-    { viewValue: 'Three months', value: '3m' },
-    { viewValue: 'One month', value: '1m' }
-  ];
+  timePeriods = stockConstants.timePeriodsData;;
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
@@ -32,7 +26,11 @@ export class StocksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stockPickerFormSubscription = this.stockPickerForm.valueChanges.pipe(debounceTime(1000)).subscribe(() => {
+      this.fetchQuote();
+    });
+  }
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
@@ -40,4 +38,10 @@ export class StocksComponent implements OnInit {
       this.priceQuery.fetchQuote(symbol, period);
     }
   }
+
+  ngOnDestroy() {
+    if(this.stockPickerFormSubscription) { 
+      this.stockPickerFormSubscription.unsubscribe()
+    }
+}
 }
