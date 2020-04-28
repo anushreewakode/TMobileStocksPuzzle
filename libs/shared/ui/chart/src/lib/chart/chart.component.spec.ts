@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChartComponent } from './chart.component';
+import { SharedUiChartModule } from '../shared-ui-chart.module';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -8,9 +8,10 @@ describe('ChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartComponent ]
+      declarations: [],
+      imports: [SharedUiChartModule],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,20 @@ describe('ChartComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should set chart configuration data on ngOnInit', () => {
+    expect(component).toBeTruthy;
+
+    component.ngOnInit();
+
+    expect(component.chart).toEqual({
+      title: '',
+      type: 'LineChart',
+      data: [],
+      columnNames: ['period', 'close'],
+      options: { title: `Stock price`, width: '600', height: '400' }
+    });
   });
+
 });
+
+

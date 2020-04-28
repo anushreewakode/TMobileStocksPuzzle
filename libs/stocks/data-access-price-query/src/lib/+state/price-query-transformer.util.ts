@@ -3,11 +3,14 @@ import { map, pick } from 'lodash-es';
 import { parse } from 'date-fns';
 
 export function transformPriceQueryResponse(
-  response: PriceQueryResponse[]
+  response: PriceQueryResponse[],
+  fromDate: Date,
+  toDate: Date
 ): PriceQuery[] {
-  return map(
-    response,
-    responseItem =>
+  let data = response.filter(selDate => new Date(selDate.date) >= new Date(fromDate) && new Date(selDate.date) <= new Date(toDate))
+  return data
+    .map(
+      responseItem =>
       ({
         ...pick(responseItem, [
           'date',
@@ -15,12 +18,7 @@ export function transformPriceQueryResponse(
           'high',
           'low',
           'close',
-          'volume',
-          'change',
-          'changePercent',
-          'label',
-          'changeOverTime'
-        ]),
+          ]),
         dateNumeric: parse(responseItem.date).getTime()
       } as PriceQuery)
   );

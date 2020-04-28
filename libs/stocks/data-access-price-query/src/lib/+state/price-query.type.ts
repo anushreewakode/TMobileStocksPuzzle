@@ -5,11 +5,6 @@ export type PriceQuery = {
   high: number;
   low: number;
   close: number;
-  volume: number;
-  change: number;
-  changePercent: number;
-  label: string;
-  changeOverTime: number;
 };
 
 export type PriceQueryResponse = {
@@ -18,14 +13,4 @@ export type PriceQueryResponse = {
   close: number;
   high: number;
   low: number;
-  volume: number;
-  uOpen: number;
-  uClose: number;
-  uHigh: number;
-  uLow: number;
-  uVolume: number;
-  change: number;
-  changePercent: number;
-  label: string;
-  changeOverTime: number;
 };

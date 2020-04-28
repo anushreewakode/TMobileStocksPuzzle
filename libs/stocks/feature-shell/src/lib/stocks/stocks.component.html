@@ -17,19 +17,32 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
-      >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <!-- Task 3 :Custom Datepicker -->
+  <div class="customDatepicker">
+      <mat-form-field class="datePicker">
+        <input matInput [matDatepicker]="fromDatepicker" formControlName="fromDate" [max]="maxDate"
+          placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatepicker></mat-datepicker>
+        <mat-error><span *ngIf="stockPickerForm.get('fromDate').invalid &&
+            stockPickerForm.get('fromDate').touched">Please enter valid Date</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="datePicker">
+        <input matInput [matDatepicker]="toDatepicker" formControlName="toDate" [max]="maxDate"
+          placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatepicker></mat-datepicker>
+        <mat-error><span *ngIf="stockPickerForm.get('toDate').invalid &&
+            stockPickerForm.get('toDate').touched">Please enter valid Date</span>
+        </mat-error>
+        
+      </mat-form-field>
+    </div>
+    <!-- Task 3 :Custom Datepicker -->
+    <p class="text-danger" *ngIf="stockPickerForm.errors">{{stockPickerForm.errors?.dateError}}</p>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
+  <button [disabled]="stockPickerForm.invalid" (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
 
 <coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
