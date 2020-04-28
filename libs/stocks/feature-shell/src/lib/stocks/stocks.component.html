@@ -4,7 +4,7 @@
       matInput
       placeholder="Symbol e.g AAPL"
       formControlName="symbol"
-      value="" id="symbol"
+      value="" id="symbol" type="text" required
     />
     <mat-error
       ><span 
@@ -18,7 +18,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label  aria-label="Favorite time period" id="periodLabel">Favorite time period</mat-label>
+    <mat-label  aria-label="Favorite time period" id="periodLabel" for="timePeriods">Favorite time period</mat-label>
     <mat-select formControlName="period" id="timePeriods" role="listbox" aria-labelledby="periodLabel">
       <mat-option
         *ngFor="let timePeriod of timePeriods"
@@ -29,7 +29,7 @@
     </mat-select>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" mat-raised-button id="submitBtn" role="button" aria-label="Go button">Go</button>
+  <button (click)="fetchQuote()" mat-raised-button id="submitBtn" role="button" aria-label="Go button" type="submit">Go</button>
 </form>
 
 <coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
