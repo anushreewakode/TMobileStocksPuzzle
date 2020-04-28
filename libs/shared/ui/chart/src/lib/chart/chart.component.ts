@@ -1,11 +1,10 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnInit
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { chartConstants } from './chart.constants';
 
 @Component({
   selector: 'coding-challenge-chart',
@@ -15,7 +14,8 @@ import { Observable } from 'rxjs';
 export class ChartComponent implements OnInit {
   @Input() data$: Observable<any>;
   chartData: any;
-
+  private chartSubscription:Subscription;
+  
   chart: {
     title: string;
     type: string;
@@ -23,17 +23,16 @@ export class ChartComponent implements OnInit {
     columnNames: string[];
     options: any;
   };
-  constructor(private cd: ChangeDetectorRef) {}
-
+  
   ngOnInit() {
-    this.chart = {
-      title: '',
-      type: 'LineChart',
-      data: [],
-      columnNames: ['period', 'close'],
-      options: { title: `Stock price`, width: '600', height: '400' }
-    };
-
-    this.data$.subscribe(newData => (this.chartData = newData));
+    this.chart = chartConstants.chartData;
+    if (this.data$)
+    this.chartSubscription = this.data$.subscribe(newData => (this.chartData = newData));
   }
+
+  ngOnDestroy() {
+    if (this.chartSubscription) {
+      this.chartSubscription.unsubscribe()
+    }
+  } 
 }

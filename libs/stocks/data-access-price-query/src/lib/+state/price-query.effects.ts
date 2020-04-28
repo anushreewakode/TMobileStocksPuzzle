@@ -15,6 +15,7 @@ import {
 } from './price-query.actions';
 import { PriceQueryPartialState } from './price-query.reducer';
 import { PriceQueryResponse } from './price-query.type';
+import { priceQueryConstants } from './price-query.constants';
 
 @Injectable()
 export class PriceQueryEffects {
@@ -24,12 +25,12 @@ export class PriceQueryEffects {
       run: (action: FetchPriceQuery, state: PriceQueryPartialState) => {
         return this.httpClient
           .get(
-            `${this.env.apiURL}/beta/stock/${action.symbol}/chart/${
+            `${this.env.apiURL}${priceQueryConstants.apiUrlConst}${action.symbol}${priceQueryConstants.apiUrlChartConst}${
               action.period
-            }?token=${this.env.apiKey}`
+            }${priceQueryConstants.tokenConst}${this.env.apiKey}`
           )
           .pipe(
-            map(resp => new PriceQueryFetched(resp as PriceQueryResponse[]))
+            map(resp => new PriceQueryFetched(resp as PriceQueryResponse[],action.fromDate, action.toDate))
           );
       },
 
