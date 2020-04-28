@@ -34,7 +34,7 @@ A short code review of the base `master` branch:
 
 3. Are there any code smells or problematic implementations?
 
-- Chart is not rendering on UI because wrong object is passed in *ngIf="data" for google-chart element.'data$' is of type observable , passing 'data$ | async' fixes the issue.Here async pipe subscribes to data$ observable to display the emitted values.
+- Chart is not rendering on UI because wrong object is passed in `*ngIf="data"` for google-chart element.'data$' is of type observable , passing 'data$ | async' fixes the issue.Here async pipe subscribes to data$ observable to display the emitted values.
 
 - Test cases are not working
 
